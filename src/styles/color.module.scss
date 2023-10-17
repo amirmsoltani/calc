@@ -1,0 +1,31 @@
+$white: #ffffff;
+$black: #000000;
+$primary: #327ff2;
+$red: #fa0c0d;
+$purple: #dd0af4;
+$gray: #d9d9d9;
+
+
+.bg {
+  &.primary{
+    background-color: $primary;
+  }
+
+  &.red  {
+    background-color: $red;
+  }
+
+  &.purple {
+    background-color: $purple
+  }
+}
+
+:export {
+  white: $white;
+  black: $black;
+  primary: $primary;
+  red: $red;
+  purple: $purple;
+  gray: $gray;
+}
+
