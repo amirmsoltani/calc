@@ -46,7 +46,10 @@ const Page = () => {
   return (
     <div className={styles.wrapper}>
       <ul className={classNames(styles.navbar, { [styles.disabled]: state === null })}>
-        <li className={classNames(styles.navItem, styles.red)} onClick={() => deleteOperator(state!)}>
+        <li className={classNames(styles.navItem, styles.red)} onClick={() => {
+          deleteOperator(state!)
+          setState(null)
+        }}>
           <Trash className={styles.default}/>
           <Trash variant={'Bold'} className={classNames(styles.hover, styles.red)}/>
         </li>
