@@ -1,6 +1,7 @@
 @import "src/styles/color.module";
 
 .operatorItem{
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   height: 200px;
@@ -9,9 +10,11 @@
   border: 2px solid $gray;
   padding:16px;
   margin: 16px 0;
-  &:focus-within,  .selected {
+  &:focus-within,&.selected {
     border-color: $primary;
   }
+
+  
 
    & .body{
     display: flex;

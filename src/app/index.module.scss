@@ -6,46 +6,7 @@
   flex-direction: column;
 }
 
-.navbar {
-  background-color: transparentize($black, .8);
-  list-style: none;
-  display: flex;
-  flex-direction: row;
-  column-gap: 12px;
-  height: 60px;
-  align-items: center;
-  padding: 0 40px;
-}
 
-.navItem {
-  composes: bg;
-  border-radius: 6px;
-  height: calc(100% - 10px);
-  aspect-ratio: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-
-  .hover {
-    display: none;
-  }
-
-  &:hover {
-    .default {
-      display: none;
-    }
-
-    .hover {
-      display: inline;
-    }
-  }
-
-  .disabled & {
-    background-color: darken($gray, 30);
-    pointer-events: none;
-  }
-}
 
 .body {
   display: flex;
@@ -54,63 +15,7 @@
   position: relative;
 }
 
-.actionBar {
-  width: 225px;
-  box-shadow: 0 0 6px $black;
-  align-self: center;
-  margin-left: 24px;
-  padding: 16px 24px;
-  list-style: none;
-  position: sticky;
-  background-color: lighten($gray,10);
-  height: fit-content;
-  border-radius: 12px;
-  display: inline-grid;
-  grid-template-columns: auto auto;
-  row-gap: 16px;
-  justify-content: space-between;
-  user-select: none;
 
-  .actionBarItem{
-    background-color: $primary;
-    aspect-ratio: 1;
-    height: 102px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    color:$white;
-    cursor: pointer;
 
-    .hover{
-      display: none;
-    }
 
-    .rotate135{
-      transform: rotate(135deg);
-    }
-
-    &:hover{
-      box-shadow: inset 0 0 25px $white;
-    .hover{
-      display: inline;
-    }
-      .default{
-        display: none;
-      }
-    }
-    &:active {
-      transform: scale(.95);
-      box-shadow: inset 0 0 50px $white;
-    }
-  }
-}
-
-.actionEnvironment{
-  flex-grow: 1;
-  margin-left: 24px;
-  padding: 56px;
-  overflow-y: scroll;
-
-}
 

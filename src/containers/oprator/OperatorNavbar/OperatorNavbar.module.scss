@@ -1,0 +1,45 @@
+@import "src/styles/color.module";
+.navbar {
+  background-color: transparentize($black, .8);
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  column-gap: 12px;
+  height: 60px;
+  align-items: center;
+  padding: 0 40px;
+}
+
+.navItem {
+  composes: bg;
+  border-radius: 6px;
+  height: calc(100% - 10px);
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  .hover {
+    display: none;
+  }
+
+  &:hover {
+    .default {
+      display: none;
+    }
+
+    .hover {
+      display: inline;
+    }
+  }
+
+  &:active{
+    transform: scale(.9);
+  }
+
+  .disabled & {
+    background-color: darken($gray, 30);
+    pointer-events: none;
+  }
+}

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useRef } from 'react'
+import React, { ChangeEvent, FC, memo, useState } from 'react'
 import styles from './NumberInput.module.scss'
 import { Add, Minus } from 'iconsax-react'
 import classNames from 'classnames'
@@ -8,6 +8,7 @@ type PropsType = {
   error?: string;
   value?: string;
   onChangeValue?: (value: string) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   visibleButtons?: boolean;
 }
 
@@ -16,19 +17,21 @@ const NumberInput: FC<PropsType> = ({
   , error
   , label
   , onChangeValue,
+  onChange: globalOnChange,
   visibleButtons = true,
 }) => {
-
-  const input = useRef<HTMLInputElement>(null)
+  const [localState, setLocalState] = useState<string>(value || '')
 
   // change value with event handler
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onChangeValue?.(Math.floor(+event.target.value).toString())
+    globalOnChange?.(event)
+    onChangeValue?.(Math.floor(+(event.target.value || 0)).toString())
+    setLocalState(Math.floor(+(event.target.value || 0)).toString())
   }
 
   // change value with button handler
   const handleChangeWithButton = (mode: 'increase' | 'decrease') => () => {
-    onChangeValue?.((+input.current!.value + (mode === 'increase' ? 1 : -1)).toString())
+    onChangeValue?.((+(value || 0) + (mode === 'increase' ? 1 : -1)).toString())
   }
 
   return (
@@ -48,9 +51,8 @@ const NumberInput: FC<PropsType> = ({
         }
 
         <input type={'number'}
-               ref={input}
                className={styles.input}
-               value={value}
+               value={value || localState}
                onChange={onChange}
         />
 
@@ -69,4 +71,4 @@ const NumberInput: FC<PropsType> = ({
   )
 }
 
-export default NumberInput
+export default memo(NumberInput, (prevProps, nextProps) => prevProps.value === nextProps.value && prevProps.error === nextProps.error)
