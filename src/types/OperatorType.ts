@@ -5,4 +5,4 @@ export type CreateOperatorType = {
   value?: number;
 }
 
-export type OperatorType = CreateOperatorType & { id?: number; }
+export type OperatorType = CreateOperatorType & { id: number; }

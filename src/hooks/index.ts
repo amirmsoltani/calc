@@ -1,1 +1,1 @@
-export * from './useOperator';
+export * from './useRedux';
