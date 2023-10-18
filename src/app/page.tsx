@@ -1,13 +1,52 @@
-import React from 'react'
+'use client'
+import React, { useMemo, useState } from 'react'
 import styles from './index.module.scss'
 import { Add, Copy, Minus, Trash } from 'iconsax-react'
 import classNames from 'classnames'
+import { OperatorCard } from '~/components'
+import { useOperator } from '~/hooks'
+
+const actionBarItems = [
+  {
+    title: 'Sum',
+    Icon: Add,
+  },
+  {
+    title: 'Minus',
+    Icon: Minus,
+  },
+  {
+    title: 'Divide',
+    Icon: Minus,
+    className: styles.rotate135
+  }, {
+    title: 'Multiple',
+    Icon: Add,
+    className: styles.rotate135,
+  }
+]
 
 const Page = () => {
+  const { addOperator, updateOperator, deleteOperator, operators } = useOperator()
+  const actionBar = useMemo(() => (
+    <ul className={styles.actionBar}>
+      {
+        actionBarItems.map(({ Icon, title, className }, index) => (
+          <li className={styles.actionBarItem}
+              key={index + title}
+              onClick={() => {addOperator(title)}}>
+            <span className={styles.default}>{title}</span>
+            <Icon className={classNames(styles.hover, className)}/>
+          </li>))
+      }
+    </ul>
+  ), [])
+  const [state, setState] = useState<null | number>(null)
+
   return (
     <div className={styles.wrapper}>
-      <ul className={classNames(styles.navbar, { [styles.disabled]: false })}>
-        <li className={classNames(styles.navItem, styles.red)}>
+      <ul className={classNames(styles.navbar, { [styles.disabled]: state === null })}>
+        <li className={classNames(styles.navItem, styles.red)} onClick={() => deleteOperator(state!)}>
           <Trash className={styles.default}/>
           <Trash variant={'Bold'} className={classNames(styles.hover, styles.red)}/>
         </li>
@@ -18,38 +57,36 @@ const Page = () => {
       </ul>
 
       <div className={styles.body}>
-        <ul className={styles.actionBar}>
-          <li className={styles.actionBarItem}>
-            <span className={styles.default}>Sum</span>
-            <Add className={styles.hover}/>
-          </li>
-          <li className={styles.actionBarItem}>
-            <span className={styles.default}>Minus</span>
-            <Minus className={styles.hover}/>
-          </li>
-          <li className={styles.actionBarItem}>
-            <span className={styles.default}>Divide</span>
-            <Minus className={classNames(styles.hover, styles.rotate135)}/>
-          </li>
-          <li className={styles.actionBarItem}>
-            <span className={styles.default}>Multiple</span>
-            <Add className={classNames(styles.hover, styles.rotate135)}/>
-          </li>
-        </ul>
+        {actionBar}
 
         <div className={styles.actionEnvironment}>
-          <div className={styles.operatorItem}>
-            <span>Operator Title</span>
-            <div className={styles.body}>
-              <div className={styles.inputs}>
-                <label>Label</label>
-                <input/>
-                <label>Label</label>
-                <input/>
-              </div>
-              <span className={styles.output}>output</span>
-            </div>
-          </div>
+          {
+            operators.map((values, index, array) => (
+              <OperatorCard
+                summery={index > 0 ? array.slice(0, index).filter((operator) => !!operator.value).reduce((o1, o2) => o1 + o2.value!, 0) : undefined}
+                isFocus={values.id! === state}
+                onFocus={() => setState(values.id!)}
+                onChangeFirstValue={(firstValue) => {
+                  updateOperator(index, {
+                    firstValue: +firstValue,
+                    secondValue: values.secondValue,
+                    id: values.id
+                  })
+                }}
+                onChangeSecondValue={(secondValue) => {
+                  updateOperator(index, {
+                    firstValue: values.firstValue,
+                    secondValue: +secondValue,
+                    id: values.id
+                  })
+                }}
+                key={values.id || index}
+                title={values.title}
+                firstValue={values.firstValue?.toString()}
+                secondValue={values.secondValue?.toString()}
+                value={values.value?.toString()}
+              />))
+          }
         </div>
       </div>
     </div>

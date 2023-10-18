@@ -1,0 +1,68 @@
+@import "src/styles/color.module";
+
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 4px 0;
+}
+
+.label{
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.inputBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid $black;
+  padding: 0;
+  border-radius: 2px;
+  &:focus-within {
+    border-color: $primary;
+    box-shadow: 0 0 4px $primary;
+  }
+}
+
+.input {
+  height: 32px;
+  border: none;
+  padding: 0 12px;
+  flex-grow: 1;
+  -moz-appearance: textfield;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &:focus {
+    border: none;
+    outline: none;
+  }
+
+}
+
+.inputBtn {
+  height: 32px;
+  margin: 0;
+  border:none;
+  background-color: transparent;
+  padding: 0;
+
+  :active{
+    transform: scale(.8);
+  }
+}
+
+.error {
+  font-size: 14px;
+  height: 14px;
+  opacity: 0;
+  color: $red;
+
+  &.show {
+    opacity: 1;
+  }
+}
