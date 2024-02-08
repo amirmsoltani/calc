@@ -12,10 +12,12 @@ export const createOperatorAction = createAsyncThunk(
       index = operators.findIndex(operator => operator.id === selected)
       data = { ...operators[index] }
     }
-    try {
-      return {...(await axios.post('/api/operator', data)).data,index}
-    } catch (e) {
-      return { id: (new Date()).getTime() * -1, ...(data as CreateOperatorType), index }
-    }
+    //Todo enable if server needed
+    // try {
+    //   return {...(await axios.post('/api/operator', data)).data,index}
+    // } catch (e) {
+    //   return { id: (new Date()).getTime() * -1, ...(data as CreateOperatorType), index }
+    // }
+    return { id: (new Date()).getTime() * -1, ...(data as CreateOperatorType), index }
   }
 )
